@@ -1,0 +1,27 @@
+{
+  "name": "SDPAsyncSocket",
+  "version": "1.0.0",
+  "summary": "盛付通SDPAsyncSocket.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/zhaolong01/SDPAsyncSocket",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "zhaolong01": "zhaolong01@shengpay.com"
+  },
+  "source": {
+    "git": "https://github.com/zhaolong01/SDPAsyncSocket.git",
+    "tag": "1.0.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "SDPAsyncSocket/Classes/**/*",
+  "dependencies": {
+    "CocoaAsyncSocket": [
+
+    ]
+  }
+}

@@ -1,11 +1,11 @@
 use_frameworks!
 
 target 'SDPAsyncSocket_Example' do
-  pod 'SDPAsyncSocket', :path => '../'
+	pod 'CocoaAsyncSocket'
+  	pod 'SDPAsyncSocket', :path => '../'
+  
 
   target 'SDPAsyncSocket_Tests' do
     inherit! :search_paths
-
-    
   end
 end

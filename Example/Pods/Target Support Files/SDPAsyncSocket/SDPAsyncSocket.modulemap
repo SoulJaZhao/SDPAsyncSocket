@@ -1,0 +1,6 @@
+framework module SDPAsyncSocket {
+  umbrella header "SDPAsyncSocket-umbrella.h"
+
+  export *
+  module * { export * }
+}
