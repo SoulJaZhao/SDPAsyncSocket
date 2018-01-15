@@ -1,10 +1,3 @@
-//
-//  SDPAsyncSocket.h
-//  Pods
-//
-//  Created by SoulJa on 2018/1/12.
-//
-
 #import <Foundation/Foundation.h>
 
 // 第三方库 for TCP
@@ -31,6 +24,13 @@
  *  @param  aData      数据
  */
 - (void)socket:(SDPAsyncSocket *)aSocket DidReceiveData:(NSData *)aData;
+
+/*
+ *  断开连接报错
+ *  @param  aSocket    SDPAsyncSocket
+ *  @param  aError     错误
+ */
+- (void)socket:(SDPAsyncSocket *)aSocket DidDisconnectWithError:(NSError *)aError;
 @end
 
 extern NSInteger const SDPTimeoutSocketConnect;// 连接socket的超时时间
@@ -81,5 +81,9 @@ extern NSInteger const SDPLengthSocketHeader;// SocketHeader的长度
  *  @param  aData    数据
  */
 - (void)sendData:(NSData *)aData;
-@end
 
+/*
+ *  断开连接
+ */
+- (void)disconnect;
+@end

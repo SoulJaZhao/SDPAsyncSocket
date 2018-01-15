@@ -1,8 +1,9 @@
 //
 //  SDPAsyncSocket.m
-//  Pods
+//  SDPAsyncSocket
 //
-//  Created by SoulJa on 2018/1/12.
+//  Created by SoulJa on 2018/1/10.
+//  Copyright © 2018年 SoulJa. All rights reserved.
 //
 
 #import "SDPAsyncSocket.h"
@@ -60,6 +61,13 @@ NSInteger const SDPLengthSocketHeader = 2;
         return;
     }
     [_socket writeData:aData withTimeout:SDPTimeoutSocketWrite tag:SDPTagSocketWrite];
+    // 读取数据
+    [_socket readDataToLength:SDPLengthSocketHeader withTimeout:SDPTimeoutSocketRead tag:SDPTagSocketReadHeader];
+}
+
+#pragma mark - 断开连接
+- (void)disconnect {
+    [_socket disconnect];
 }
 
 #pragma mark - GCDAsyncSocketDelegate
@@ -75,10 +83,9 @@ NSInteger const SDPLengthSocketHeader = 2;
     if (_delegate && [_delegate respondsToSelector:@selector(socketDidSendToServer:)]) {
         [_delegate socketDidSendToServer:self];
     }
-    // 读取数据
-    [sock readDataToLength:SDPLengthSocketHeader withTimeout:SDPTimeoutSocketRead tag:SDPTagSocketReadHeader];
 }
 
+// 读取到数据的回调
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     // TagReadHeader 用于计算Body的长度
     if (tag == SDPTagSocketReadHeader) {
@@ -102,5 +109,13 @@ NSInteger const SDPLengthSocketHeader = 2;
         free(bodyBytes);
     }
 }
-@end
 
+// 断开
+- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err {
+    if ([err.domain isEqualToString:@"GCDAsyncSocketErrorDomain"] && err.code != GCDAsyncSocketNoError && err.code != GCDAsyncSocketClosedError) {
+        if (_delegate && [_delegate respondsToSelector:@selector(socket:DidDisconnectWithError:)]) {
+            [_delegate socket:self DidDisconnectWithError:err];
+        }
+    }
+}
+@end
